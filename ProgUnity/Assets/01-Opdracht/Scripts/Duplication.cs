@@ -17,7 +17,7 @@ public class Duplication : MonoBehaviour
         }
     }
 
-    private void Update()
+     void Update()
     {
 
 

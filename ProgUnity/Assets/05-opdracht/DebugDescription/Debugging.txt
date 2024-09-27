@@ -1,0 +1,111 @@
+Debugging Opdracht 5 PROG
+
+
+bug 1:
+Code:
+
+using UnityEngine;
+
+public class DebugScript1 : MonoBehaviour
+{
+    private float Numbers = 0f;
+    private bool TOF = false;
+    void Start()
+    {
+
+    }
+
+
+    void Update()
+    {
+        if (TOF == true && Numbers == 0f)
+        {
+            StopAll();
+        }
+    }
+
+    void StopAll()
+    {
+        Numbers = 2f;
+    }
+}
+
+
+dus als TOF gelijk is aan 'true' en de variable 'Numbers' gelijk is aan 0, dan moet de functie 'StopAll' aangeroepen worden.
+In de tweede foto staat dat de: 
+Numbers een value heeft van 0
+TOF een value heeft van false
+
+Dus de functie StopAll wordt nooit aangeroepen, omdat de variable TOF op true staat.
+
+
+
+
+Bug 2:
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DebugScript2 : MonoBehaviour
+{
+    [SerializeField] GameObject Player;
+    private int EnemyCount = 0;
+    private float WalkSpeed = 3f;
+    void Start()
+    {
+        
+    }
+
+    
+    void Update()
+    {
+        if (EnemyCount == 5)
+        {
+            Player.transform.position = Vector3.forward * WalkSpeed * Time.deltaTime;
+        }
+    }
+}
+
+
+Hier heb ik een breakpoint gezet bij de if statement (alweer)
+
+De player gaat niet naar voren
+
+De values:
+EnemyCOunt 0;
+
+Dus het ligt aan de EnemyCount, want die staat op 0 terwijl de if statement er 5 nodig heeft.
+
+
+
+
+bug 3:
+
+Code:
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class DebugScript3 : MonoBehaviour
+{
+    private string EnemiesTalk = "Take Cover";
+    private float Enemies = 0f;
+    void Start()
+    {
+
+    }
+
+    private void Update()
+    {
+        if (EnemiesTalk == "Cover")
+        {
+            Enemies++;
+        }
+    }
+
+}
+
+
+Hier wilde ik dat de Enemies 1tje hoger word als de string 'EnemiesTalk' gelijk staat aan "Cover" maar de string staat op "Take Cover", hierdoor lukt het niet.
