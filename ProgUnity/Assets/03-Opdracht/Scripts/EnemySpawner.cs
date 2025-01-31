@@ -5,59 +5,52 @@ using UnityEngine.UIElements;
 
 public class EnemySpawner : MonoBehaviour
 {
-    private float OffSetEnemy = 1f;
-    private float ElapsedTime = 0f;
-    private int EnemyCount = 0;
-    private GameObject EnemyClone;
-    private List<GameObject> Enemies = new List<GameObject>();
-    [SerializeField] GameObject Enemy;
+    [SerializeField] GameObject enemyPrefab;
+    private List<GameObject> enemies = new List<GameObject>();
 
+    private float elapsedTime = 0;
 
-    void Start()
+    private void Update()
     {
-
-    }
-
-
-    void Update()
-    {
-        ElapsedTime += Time.deltaTime;
-
-        if (ElapsedTime > 3)
-        {
-            EnemySpawn(3);
-            EnemyCount = 0;
-
-        }
-
-
-        if (Input.GetKey(KeyCode.W))
+        elapsedTime += Time.deltaTime;
+        if (Input.GetKeyDown(KeyCode.W))
         {
             for (int i = 0; i < 100; i++)
             {
-                EnemySpawn(1);
+                SpawnEnemy();
             }
         }
 
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            Destroy(EnemyClone);
+            ClearEnemies();
         }
 
+        if (elapsedTime > 3)
+        {
+            int enemyCount = Random.Range(0, 5);
+            for (int i = 0; i < enemyCount; i++)
+            {
+                SpawnEnemy();
+            }
+            elapsedTime = 0;
+        }
     }
-
-    void EnemySpawn(int EnemyCounts)
+    private void SpawnEnemy()
     {
-        for (int i = 0; i < EnemyCounts; i++)
-        {
-            float x = Random.Range(-4, 4) + (i * OffSetEnemy);
-
-            Vector3 RandomPos = new Vector3(x, 0.5f, 0);
-            EnemyClone = Instantiate(Enemy, RandomPos, Quaternion.identity);
-
-            ElapsedTime = 0f;
-            EnemyCount++;
-        }
+        Vector3 spawnLocation = new Vector3(0, 1, 0);
+        GameObject enemy = Instantiate(enemyPrefab, spawnLocation, Quaternion.identity);
+        enemies.Add(enemy);
     }
+
+    private void ClearEnemies()
+    {
+        foreach (GameObject enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+        enemies.Clear();
+    }
+
 }
 
